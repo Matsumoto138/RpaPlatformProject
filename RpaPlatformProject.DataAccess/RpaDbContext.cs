@@ -5,7 +5,7 @@ namespace RpaPlatformProject.DataAccess
 {
 	public class RpaDbContext : DbContext
 	{
-		public RpaDbContext(DbContextOptions<RpaDbContext> options) : base(options) { }
+		public RpaDbContext(DbContextOptions<RpaDbContext> options) : base(options) {}
 
 		public DbSet<User> Users { get; set; }
 		public DbSet<Robot> Robots { get; set; }
