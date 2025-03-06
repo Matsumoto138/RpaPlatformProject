@@ -1,13 +1,74 @@
 ﻿@page "/"
-<h3>RPA Dashboard</h3>
+@using RpaPlatformProject.Business.Interface
+@using RpaPlatformProject.Entity
 
-<p>Blazor Projemiz Başladı 🚀</p>
-<RadzenButton Click="@ButtonClicked" Text="Hi"></RadzenButton>
+@inject IScheduleService ScheduleService
+@inject ILogService LogService
+@inject IRobotService RobotService
+@inject IUserService UserService
 
+<RadzenCard>
+    <RadzenRow>
+        <RadzenColumn>
+            <RadzenCard>
+                <RadzenHeading Size="H4">Toplam Kullanıcı</RadzenHeading>
+                <RadzenBadge Text="@(UserCount.ToString())" Style="font-size: 20px;" />
+            </RadzenCard>
+        </RadzenColumn>
+        <RadzenColumn>
+            <RadzenCard>
+                <RadzenHeading Size="H4">Toplam Robot</RadzenHeading>
+                <RadzenBadge Text="@(RobotCount.ToString())" Style="font-size: 20px;" />
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenTabs>
+        <RadzenTabsItem Text="Son Çalıştırılan Robotlar">
+            <RadzenDataGrid TItem="Robot" Data="@RecentRobots" ColumnWidth="200px">
+                <Columns>
+                    <RadzenDataGridColumn TItem="Robot" Property="Id" Title="ID" />
+                    <RadzenDataGridColumn TItem="Robot" Property="Name" Title="Adı" />
+                    <RadzenDataGridColumn TItem="Robot" Property="LastRunTime" Title="Son Çalıştırma" />
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenTabsItem>
+
+        <RadzenTabsItem Text="Planlanan Görevler">
+            <RadzenDataGrid TItem="Schedule" Data="@Schedules" ColumnWidth="200px">
+                <Columns>
+                    <RadzenDataGridColumn TItem="Schedule" Property="Id" Title="ID" />
+                    <RadzenDataGridColumn TItem="Schedule" Property="RobotName" Title="Robot" />
+                    <RadzenDataGridColumn TItem="Schedule" Property="ScheduledTime" Title="Zaman" />
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenTabsItem>
+
+        <RadzenTabsItem Text="Log Kayıtları">
+            <RadzenDataGrid TItem="Log" Data="@Logs" ColumnWidth="200px">
+                <Columns>
+                    <RadzenDataGridColumn TItem="Log" Property="Id" Title="ID" />
+                    <RadzenDataGridColumn TItem="Log" Property="Message" Title="Mesaj" />
+                    <RadzenDataGridColumn TItem="Log" Property="LogTime" Title="Tarih" />
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenTabsItem>
+    </RadzenTabs>
+</RadzenCard>
 
 @code {
-    void ButtonClicked()
+    private int UserCount;
+    private int RobotCount;
+    private List<Robot> RecentRobots = new();
+    private List<Schedule> Schedules = new();
+    private List<Log> Logs = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        // Handle the Click event of RadzenButton
+        UserCount = (await UserService.GetTotalUserCountAsync());
+        RobotCount = (await RobotService.GetAllRobotsAsync()).Count;
+        RecentRobots = await RobotService.GetRecentRobotsAsync(5);
+        Schedules = await ScheduleService.GetAllSchedulesAsync();
+        Logs = await LogService.GetAllLogsAsync();
     }
 }

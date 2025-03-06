@@ -8,23 +8,28 @@ namespace RpaPlatformProject.Business.Service
 	public class UserService : IUserService
 	{
 		private readonly IUserRepository _userRepository;
-		private readonly IMapper _mapper;
 
-		public UserService(IUserRepository userRepository, IMapper mapper)
+		public UserService(IUserRepository userRepository)
 		{
 			_userRepository = userRepository;
-			_mapper = mapper;
 		}
 
 		public async Task AddAsync(User user)
 		{
-			var newUser = _mapper.Map<User>(user);
+			var newUser = new User
+			{
+				FullName = user.FullName,
+				Email = user.Email,
+				PasswordHash = user.PasswordHash,
+				Role = user.Role
+			};
 			await _userRepository.AddAsync(newUser);
 		}
 
-		public Task DeleteAsync(int id)
+		public async Task DeleteAsync(int id)
 		{
-			throw new NotImplementedException();
+			var user = await _userRepository.GetByIdAsync(id);
+			_userRepository.Delete(user);
 		}
 
 		public async Task<List<User>> GetAllAsync()
@@ -37,9 +42,10 @@ namespace RpaPlatformProject.Business.Service
 			return await _userRepository.GetByIdAsync(id);
 		}
 
-		public Task<int> GetTotalUserCountAsync()
+		public async Task<int> GetTotalUserCountAsync()
 		{
-			throw new NotImplementedException();
+			var allUsers = await _userRepository.GetAllAsync();
+			return allUsers.Count;
 		}
 
 		public async Task UpdateAsync(User user)
@@ -47,7 +53,11 @@ namespace RpaPlatformProject.Business.Service
 			var updatedUser = await _userRepository.GetByIdAsync(user.Id);
 			if (updatedUser != null)
 			{
-				_mapper.Map(user, updatedUser);
+				updatedUser.FullName = user.FullName;
+				updatedUser.Email = user.Email;
+				updatedUser.PasswordHash = user.PasswordHash;
+				updatedUser.Role = user.Role;
+
 				_userRepository.Update(updatedUser);
 			}
 		}

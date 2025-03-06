@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpaPlatformProject.DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpaPlatformProject.Business", "RpaPlatformProject.Business\RpaPlatformProject.Business.csproj", "{33524316-231A-43C0-B411-76E8F226A96B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpaPlatformProject", "RpaPlatformProject\RpaPlatformProject.csproj", "{23823C62-BBA8-4329-B6B1-F3A02CCF8A7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpaPlatform", "RpaPlatform\RpaPlatform.csproj", "{60F816F4-BE7F-4E59-A7C2-CBF8CD37BA4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{33524316-231A-43C0-B411-76E8F226A96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33524316-231A-43C0-B411-76E8F226A96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33524316-231A-43C0-B411-76E8F226A96B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23823C62-BBA8-4329-B6B1-F3A02CCF8A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23823C62-BBA8-4329-B6B1-F3A02CCF8A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23823C62-BBA8-4329-B6B1-F3A02CCF8A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23823C62-BBA8-4329-B6B1-F3A02CCF8A7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60F816F4-BE7F-4E59-A7C2-CBF8CD37BA4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60F816F4-BE7F-4E59-A7C2-CBF8CD37BA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60F816F4-BE7F-4E59-A7C2-CBF8CD37BA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60F816F4-BE7F-4E59-A7C2-CBF8CD37BA4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

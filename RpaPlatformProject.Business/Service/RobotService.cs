@@ -8,12 +8,10 @@ namespace RpaPlatformProject.Business.Service
 	public class RobotService : IRobotService
 	{
 		private readonly IRobotRepository _robotRepository;
-		private readonly IMapper _mapper;
 
-		public RobotService(IRobotRepository robotRepository, IMapper mapper)
+		public RobotService(IRobotRepository robotRepository)
 		{
 			_robotRepository = robotRepository;
-			_mapper = mapper;
 		}
 
 		public async Task<List<Robot>> GetAllRobotsAsync()
@@ -28,7 +26,14 @@ namespace RpaPlatformProject.Business.Service
 
 		public async Task AddRobotAsync(Robot robot)
 		{
-			var newRobot = _mapper.Map<Robot>(robot);
+			var newRobot = new Robot
+			{
+				Name = robot.Name,
+				Description = robot.Description,
+				Status = robot.Status,
+				CreatedAt = DateTime.Now,
+				UserId = robot.UserId
+			};
 			await _robotRepository.AddAsync(newRobot);
 		}
 
@@ -37,7 +42,15 @@ namespace RpaPlatformProject.Business.Service
 			var existingRobot = await _robotRepository.GetByIdAsync(robot.Id);
 			if (existingRobot != null)
 			{
-				_mapper.Map(robot, existingRobot);
+				existingRobot.Name = robot.Name;
+				existingRobot.Description = robot.Description;
+				existingRobot.Status = robot.Status;
+				existingRobot.CreatedAt = robot.CreatedAt;
+				existingRobot.UserId = robot.UserId;
+				existingRobot.User = robot.User;
+				existingRobot.Schedules = robot.Schedules;
+				existingRobot.Logs = robot.Logs;
+
 				_robotRepository.Update(existingRobot);
 			}
 		}
